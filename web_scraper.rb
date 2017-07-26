@@ -245,6 +245,9 @@ def google_crawler store_name
 	@first_hit = links[0].children[0].attributes['href'].value
 	end
 
+	#searches each paragraph for the string 'days'
+	# checks if preceeding word is a string (sometimes returns objects, causing errors)
+	#checks if preceeding word is a number eg 21 days
 	def check_for_day link
 		@a.get(link.href).search(".//p").each do |paragraph|
 			if paragraph.text.downcase.include? 'days'
@@ -262,20 +265,20 @@ def google_crawler store_name
 
 	@a.get(@first_hit) do |page|
 		page.links.each do |link|
-			#check for returns in link
+			#check for string 'returns' in links
 			if link.text.downcase.include? 'return'
 				return check_for_day link
   			return
 			end
 		end
 		page.links.each do |link|
+			# failing first test, check for customer in links
 			if link.text.downcase.include? 'customer'
 				return check_for_day link
 				return
 			end			
 		end
 	end
-	# failing first test, check for customer in links
 end
 
 
