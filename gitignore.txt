@@ -1,2 +1,0 @@
-/rollback_app/tmp/*
-/rollback_app/log/*
