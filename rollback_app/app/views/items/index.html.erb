@@ -63,7 +63,7 @@
                           <p><label for="">Purchase Date</label>
                           <input required="" type="text" placeholder="Purchase Date" onfocus="(this.type='date')"/></p>
                           <p><label for="">Store</label>
-                          <input name="store_name" id="">
+                          <input name="store_name" id="store_input">
                           </p>
                        <p><div>
                          DISPLAY STORE DETAILS / RETURN DAYS
@@ -124,4 +124,18 @@
             oVal = ($(window).scrollTop() / 3); 
             big_image.css('top',oVal);
         };
+
+        var options = {
+					url: "/api/stores/index",
+
+					getValue: "name",
+
+					list: {
+						match: {
+						enabled: true
+						}
+					}
+				};
+
+$("#store_input").easyAutocomplete(options);
     </script>
