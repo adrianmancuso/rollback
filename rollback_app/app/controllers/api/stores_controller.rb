@@ -1,12 +1,9 @@
 class Api::StoresController < ApplicationController
 
 	def show
-		store = Store.find(params[:id])
+		@store = Store.find_by(name: params[:store_name])
 
-		render json: {
-			name: store.name,
-			days: store.return_window,
-		}
+		render json: @store
 	end
 
 	def index
