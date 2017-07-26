@@ -5,3 +5,17 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 163ms (Views: 4.8ms)
 
 
+Started GET "/" for 127.0.0.1 at 2017-07-26 10:47:11 +1000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/zybisko/.rvm/gems/ruby-2.4.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/zybisko/.rvm/gems/ruby-2.4.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb (2.9ms)
+Completed 200 OK in 299ms (Views: 10.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-07-26 10:47:17 +1000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/zybisko/.rvm/gems/ruby-2.4.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/zybisko/.rvm/gems/ruby-2.4.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb (6.2ms)
+Completed 200 OK in 9ms (Views: 8.1ms)
+
+
