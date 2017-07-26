@@ -1,2 +1,2 @@
-/rollback_app/tmp/
-/rollback_app/log/
+rollback_app/tmp/*
+rollback_app/log/*
