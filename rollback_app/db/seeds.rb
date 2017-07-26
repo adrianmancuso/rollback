@@ -64,4 +64,8 @@ scraped_results = {"7 For All Mankind"=>"30",
  "Zara"=>"15",
  "Zimmermann"=>"15"}
 
- 
+Store.destroy_all
+
+ scraped_results.each do |key, value|
+ 	Store.create name: key, return_window: value
+ end
