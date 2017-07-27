@@ -73,10 +73,9 @@
                           <button id="authorize-button" style="display: none;">Authorize</button>
                           <button id="signout-button" style="display: none;">Sign Out</button>
 
-                       <div><p id="content"></p></div>
+                          <div><p id="content"></p></div>
 
-
-                       <button class="btn-sm btn-warning" id="create">Create Event</button>
+                          <button class="btn-sm btn-warning" id="create">Create Event</button>
 
                        </form>
                       </div>
@@ -91,17 +90,17 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" style="display:none;">
         <div class="container">
             <nav class="pull-left copyright">
-                &copy; 2017 A/M/S/V
+                &copy; 2017 A/M/S
             </nav>
-<!--             <div class="social-area pull-right">
+            <div class="social-area pull-right">
                 <a href="#" class="btn btn-social btn-simple"><i class="fa fa-github-alt fa-fw"></i> <span class="network-name"></span></a>
                 <a href="#" class="btn btn-social btn-simple"><i class="fa fa-twitter fa-fw"></i> <span class="network-name"></span></a>
                 <a href="#" class="btn btn-social btn-simple"><i class="fa fa-facebook fa-fw"></i> <span class="network-name"></span></a>
                 <a href="#" class="btn btn-social btn-simple"><i class="fa fa-envelope fa-fw"></i> <span class="network-name"></span></a>
-            </div> -->
+            </div>
         </div>
     </footer>
 </body>
@@ -148,7 +147,7 @@
 
 <script type="text/javascript">
   // Client ID and API key from the Developer Console
-  var CLIENT_ID = "<%= ENV["CLIENT_ID"] %>"
+  var CLIENT_ID = "<%= ENV["CLIENT_ID"] %>";
   // Array of API discovery doc URLs for APIs used by the quickstart
   var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
@@ -160,6 +159,7 @@
 
   var authorizeButton = document.getElementById('authorize-button');
   var signoutButton = document.getElementById('signout-button');
+  var createButton = document.getElementById('create');
 
   /**
    *  On load, called to load the auth2 library and API client library.
@@ -196,7 +196,9 @@
     if (isSignedIn) {
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
-      createEvent();
+      createButton.addEventListener('click', function () {
+        createEvent();
+      });
       // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
     } else {
       authorizeButton.style.display = 'block';
@@ -266,9 +268,7 @@
         };
       });
 
-
-
-      var date = new Date ('2017-11-11');
+      var date = new Date (purchaseDate);
       date = new Date (date.setDate(date.getDate() + return_window));
       date = date.toISOString();
       date = date.split('T')[0];
