@@ -1,13 +1,13 @@
-<head> 
+<head>
   <title>ROLL BACK : Record your purchases and view Return Days</title>
 </head>
 
 <body class="landing-page">
 
-<nav class="navbar navbar-transparent navbar-top" role="navigation">
+  <nav class="navbar navbar-transparent navbar-top" role="navigation">
     <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+      <div class="navbar-header">
       <button id="menu-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar bar1"></span>
@@ -51,21 +51,33 @@
     <div class="parallax filter-gradient blue" data-color="blue">
         <div class="parallax-background">
             <%= image_tag "rack.jpg" %>
-        </div>  
-        <div class= "container"> 
+
+        </div>
+        <div class= "container">
             <div class="row">
                 <div class="col-sm-5 col-xs">
                     <div class="parallax-image">
+
                       <div class=""><p class="intro">Enter an item, the date and where you bought it - click 'create event' to set a reminder event in your Google Calendar!</p>
+
                         <form action="">
+
                           <p><label for="">Purchased Item:</label>
-                          <input type="text" placeholder="Item Description" name=""></p>
+                          <input type="text" placeholder="Item Description" name="item" id="item"></p>
                           <p><label for="">Purchase Date</label>
-                          <input required="" type="text" placeholder="Purchase Date" onfocus="(this.type='date')"/></p>
+                          <input required="" type="text" placeholder="Purchase Date" name="date" id="date" onfocus="(this.type='date')"/></p>
                           <p><label for="">Store</label>
                           <input name="store_name" id="store_input">
                           </p>
+
+                          <button id="authorize-button" style="display: none;">Authorize</button>
+                          <button id="signout-button" style="display: none;">Sign Out</button>
+
+                       <div><p id="content"></p></div>
+
+
                        <button class="btn-sm btn-warning" id="create">Create Event</button>
+
                        </form>
                       </div>
                     </div>
@@ -79,10 +91,10 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" style="display:none;">
         <div class="container">
             <nav class="pull-left copyright">
-                &copy; 2017 A/M/S 
+                &copy; 2017 A/M/S
             </nav>
             <div class="social-area pull-right">
                 <a href="#" class="btn btn-social btn-simple"><i class="fa fa-github-alt fa-fw"></i> <span class="network-name"></span></a>
@@ -91,43 +103,208 @@
                 <a href="#" class="btn btn-social btn-simple"><i class="fa fa-envelope fa-fw"></i> <span class="network-name"></span></a>
             </div>
         </div>
-        </footer>
+    </footer>
 </body>
-     <script type="text/javascript">
-        var big_image;
-        $().ready(function(){
-            responsive = $(window).width();
-            
-            // $(window).on('scroll', gsdk.checkScrollForTransparentNavbar);
-            
-            if (responsive >= 768){
-                big_image = $('.parallax-background').find('img');
-                console.log(big_image);
-                $(window).on('scroll',function(){           
-                    parallax();
-                });
-            }
-            
-        });
-        
-       var parallax = function() {
-            var current_scroll = $(this).scrollTop();
-            
-            oVal = ($(window).scrollTop() / 3); 
-            big_image.css('top',oVal);
+
+<script type="text/javascript">
+  var big_image;
+  $().ready(function(){
+      responsive = $(window).width();
+
+      // $(window).on('scroll', gsdk.checkScrollForTransparentNavbar);
+
+      if (responsive >= 768){
+          big_image = $('.parallax-background').find('img');
+          console.log(big_image);
+          $(window).on('scroll',function(){
+              parallax();
+          });
+      }
+
+  });
+
+ var parallax = function() {
+      var current_scroll = $(this).scrollTop();
+
+      oVal = ($(window).scrollTop() / 3);
+      big_image.css('top',oVal);
+    };
+
+  var options = {
+		url: "/api/stores/index",
+
+		getValue: "name",
+
+		list: {
+			match: {
+			enabled: true
+			}
+		}
+	};
+
+  $("#store_input").easyAutocomplete(options);
+
+</script>
+
+<script type="text/javascript">
+  // Client ID and API key from the Developer Console
+  var CLIENT_ID = '337904611882-aup53vunmphh3dofgla5f5sba5qerm3t.apps.googleusercontent.com';
+
+  // Array of API discovery doc URLs for APIs used by the quickstart
+  var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+
+  // Authorization scopes required by the API; multiple scopes can be
+  // included, separated by spaces.
+  var SCOPES = "https://www.googleapis.com/auth/calendar";
+
+  // Grab the inputs from user
+
+  var authorizeButton = document.getElementById('authorize-button');
+  var signoutButton = document.getElementById('signout-button');
+
+  /**
+   *  On load, called to load the auth2 library and API client library.
+   */
+  function handleClientLoad() {
+    gapi.load('client:auth2', initClient);
+  }
+
+  /**
+   *  Initializes the API client library and sets up sign-in state
+   *  listeners.
+   */
+  function initClient() {
+    gapi.client.init({
+      discoveryDocs: DISCOVERY_DOCS,
+      clientId: CLIENT_ID,
+      scope: SCOPES
+    }).then(function () {
+      // Listen for sign-in state changes.
+      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+      // Handle the initial sign-in state.
+      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      authorizeButton.onclick = handleAuthClick;
+      signoutButton.onclick = handleSignoutClick;
+    });
+  }
+
+  /**
+   *  Called when the signed in status changes, to update the UI
+   *  appropriately. After a sign-in, the API is called.
+   */
+  function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+      authorizeButton.style.display = 'none';
+      signoutButton.style.display = 'block';
+      createEvent();
+      // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
+    } else {
+      authorizeButton.style.display = 'block';
+      signoutButton.style.display = 'none';
+      // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
+      // createEvent();
+    }
+  }
+
+  /**
+   *  Sign in the user upon button click.
+   */
+  function handleAuthClick(event) {
+    event.preventDefault();
+    gapi.auth2.getAuthInstance().signIn();
+  }
+
+  /**
+   *  Sign out the user upon button click.
+   */
+  function handleSignoutClick(event) {
+    gapi.auth2.getAuthInstance().signOut();
+  }
+
+  /**
+   * Append a pre element to the body containing the given message
+   * as its text node. Used to display the results of the API call.
+   *
+   * @param {string} message Text to be placed in pre element.
+   */
+  function appendPre(message) {
+    var pre = document.getElementById('content');
+    var textContent = document.createTextNode(message + '\n');
+    pre.appendChild(textContent);
+  }
+
+  // Refer to the JavaScript quickstart on how to setup the environment:
+  // https://developers.google.com/google-apps/calendar/quickstart/js
+  // Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
+  // stored credentials.
+  function addEvent(newEvent) {
+    console.log('adding event');
+    var event = newEvent;
+
+    var request = gapi.client.calendar.events.insert({
+      'calendarId': 'primary',
+      'resource': event
+    });
+
+    request.execute(function(event) {
+      appendPre('Event created: ' + event.summary);
+    });
+  }
+
+  function createEvent () {
+    var storeName = document.getElementById('store_input').value;
+    var purchaseDate = document.getElementById('date').value.split('-').reverse().join('-');
+    var item = document.getElementById('item').value;
+    var return_window;
+
+    $.ajax({
+      url: '/api/stores/index'
+    }).done(function(stores) {
+      stores.forEach(function(store) {
+        if(store.name == storeName) {
+          return_window = store.return_window;
         };
+      });
 
-        var options = {
-					url: "/api/stores/index",
 
-					getValue: "name",
 
-					list: {
-						match: {
-						enabled: true
-						}
-					}
-				};
+      var date = new Date ('2017-11-11');
+      date = new Date (date.setDate(date.getDate() + return_window));
+      date = date.toISOString();
+      date = date.split('T')[0];
+      console.log(date);
 
-$("#store_input").easyAutocomplete(options);
-    </script>
+      var newEvent = {
+        'summary': storeName,
+        // 'location': '800 Howard St., San Francisco, CA 94103',
+        'description': 'Last day to return ' + item,
+        'start': {
+          'dateTime': date + 'T09:00:00+10:00',
+          'timeZone': 'Australia/Melbourne'
+        },
+        'end': {
+          'dateTime': date + 'T17:00:00+10:00',
+          'timeZone': 'Australia/Melbourne'
+        },
+        'reminders': {
+          'useDefault': false,
+          'overrides': [
+            {'method': 'email', 'minutes': 24 * 60},
+            {'method': 'popup', 'minutes': 10}
+          ]
+        }
+      };
+      console.log (newEvent);
+      addEvent(newEvent);
+    });
+    // debugger
+
+  }
+
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
