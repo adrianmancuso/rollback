@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root "items#index"
   resources :items, only: [:index]
   get '/api/stores/index', to: 'api/stores#index'
+  get '/api/stores/:id', to: 'api/stores#show'
 end
