@@ -5,6 +5,19 @@
   src: url(bttf.ttf);
 }
 
+label {
+  color: #f6f6f6;
+}
+
+#create {
+  color: black;
+}
+
+.intro {
+  font-family:'Montserrat', sans-serif;
+  color: #f6f6f6;
+}
+
 /*           Font Smoothing      */
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .btn-simple, a, .td-name, td {
   -moz-osx-font-smoothing: grayscale;
@@ -1184,7 +1197,7 @@ vertical-align: middle;
     background: rgba(0, 0, 0, 0.75);
   }
   .landing-page .parallax {
-    height: 560px;
+    /*height: 560px;*/
     text-align: center;
   }
 
