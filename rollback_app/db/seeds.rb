@@ -65,7 +65,16 @@ scraped_results = {"7 For All Mankind"=>"30",
  "Zimmermann"=>"15"}
 
 Store.destroy_all
+User.destroy_all
 
  scraped_results.each do |key, value|
  	Store.create name: key, return_window: value
  end
+
+User.create(name: 'Sarah', email: 'sarah@gmail.com', password: 'password')
+User.create(name: 'Adrian', email: 'adrian@gmail.com', password: 'password')
+User.create(name: 'Matt', email: 'sabrina@gmail.com', password: 'password')
+User.create(name: 'Sabrina', email: 'sabrina@gmail.com', password: 'password')
+User.create(name: 'Chloe', email: 'chloe@gmail.com', password: 'password')
+
+
