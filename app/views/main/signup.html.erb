@@ -1,0 +1,14 @@
+<form action="/signup">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+
+    <label>Name</label>
+    <input type="text" name="name" value="<%= @users['name'] %>">
+
+    <label>Email</label>
+    <input type="text" name="email" value="<%= @users['email'] %>">
+
+    <label>Password</label>
+    <input type="text" name="password">
+
+    <button>Join</button>
+</form>

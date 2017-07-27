@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resources :items, only: [:index]
   get '/api/stores/index', to: 'api/stores#index'
   get '/api/stores/:id', to: 'api/stores#show'
+  resources :users
+  get '/signup', to: 'users#new'
 end
