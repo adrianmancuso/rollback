@@ -194,6 +194,7 @@
    */
   function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
+      console.log('is signed in');
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
       createButton.addEventListener('click', function () {
@@ -201,6 +202,8 @@
       });
       // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
     } else {
+      console.log('is signed out');
+
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';
       // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
