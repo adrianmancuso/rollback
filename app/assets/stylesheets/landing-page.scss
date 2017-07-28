@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'future';
-  src: url(bttf.ttf);
+  src: font-url("bttf.ttf");
 }
 
 label {
@@ -1480,3 +1480,4 @@ ul.banner-social-buttons li {
     margin-bottom: 0;
 
   }
+}
