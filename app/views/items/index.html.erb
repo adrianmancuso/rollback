@@ -70,12 +70,11 @@
                           <input name="store_name" id="store_input">
                           </p>
 
-                          <button id="authorize-button" style="display: none;">Authorize</button>
+                          <button id="authorize-button" style="display: none;">Sign In</button>
                           <button id="signout-button" style="display: none;">Sign Out</button>
-
-                          <div><p id="content"></p></div>
-
                           <button class="btn-sm btn-warning" id="create">Create Event</button>
+<!--
+                          <div><p id="content"></p></div> -->
 
                        </form>
                       </div>
@@ -196,12 +195,12 @@
       console.log('is signed in');
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
-      createButton.addEventListener('click', function () {
+      createButton.addEventListener('click', function (event) {
+        event.preventDefault();
         createEvent();
       });
     } else {
       console.log('is signed out');
-
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';
     }
@@ -228,10 +227,10 @@
    *
    * @param {string} message Text to be placed in pre element.
    */
-  function appendPre(message) {
-    var pre = document.getElementById('content');
-    var textContent = document.createTextNode(message + '\n');
-    pre.appendChild(textContent);
+  function appendPre(event) {
+    var pre = document.getElementsByClassName('intro')[0];
+    pre.innerHTML = 'Event created:<br>Store: ' + event.summary + '<br>Date: ' + event.start.dateTime.split('T')[0] + '<br>' + event.description;
+
   }
 
   // Refer to the JavaScript quickstart on how to setup the environment:
@@ -248,7 +247,7 @@
     });
 
     request.execute(function(event) {
-      appendPre('Event created: ' + event.summary);
+      appendPre(event);
     });
   }
 
