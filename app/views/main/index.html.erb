@@ -38,7 +38,9 @@
           </a>
       </li>
       <li>
-          <a href="#about">
+
+          <a href="#about_tag">
+
               About
           </a>
       </li>
@@ -50,6 +52,7 @@
   <div class="parallax filter-gradient blue" data-color="blue">
     <div class="parallax-background">
           <%= image_tag "rack.jpg" %>
+
       </div>  
     <div class= "container"> 
       <div class="row">
@@ -70,7 +73,7 @@
     </div>
   </div>
 
-    <div class="section section-presentation">
+    <div id="about_tag" class="section section-presentation">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -85,7 +88,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 <div class="section section-features section-no-padding">
     <div class="container-fluid">
         <div class="row">
@@ -124,7 +127,7 @@
     <footer class="footer">
         <div class="container">
             <nav class="pull-left copyright">
-                &copy; 2017 A/M/S/V 
+                &copy; 2017 A/M/S/V
             </nav>
             <div class="social-area pull-right">
                 <a href="https://github.com/placeholder" class="btn btn-social btn-simple"><i class="fa fa-github-alt fa-fw"></i> <span class="network-name"></span></a>
@@ -140,23 +143,23 @@
         var big_image;
         $().ready(function(){
             responsive = $(window).width();
-            
+
             // $(window).on('scroll', gsdk.checkScrollForTransparentNavbar);
-            
+
             if (responsive >= 768){
                 big_image = $('.parallax-background').find('img');
                 console.log(big_image);
-                $(window).on('scroll',function(){           
+                $(window).on('scroll',function(){
                     parallax();
                 });
             }
-            
+
         });
-        
+
        var parallax = function() {
             var current_scroll = $(this).scrollTop();
-            
-            oVal = ($(window).scrollTop() / 3); 
+
+            oVal = ($(window).scrollTop() / 3);
             big_image.css('top',oVal);
         };
     </script>
