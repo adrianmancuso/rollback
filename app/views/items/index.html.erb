@@ -70,9 +70,9 @@
                           <input name="store_name" id="store_input">
                           </p>
 
-                          <button id="authorize-button" style="display: none;">Sign In</button>
-                          <button id="signout-button" style="display: none;">Sign Out</button>
-                          <button class="btn-sm btn-warning" id="create">Create Event</button>
+                          <button class="btn-sm btn-warning" id="authorize-button" style="display: none; color: black;">Sign In</button>
+                          <button class="btn-sm btn-warning" id="signout-button" style="display: none; color: black;">Sign Out</button>
+                          <button class="btn-sm btn-warning" id="create" style="display: inline-block;">Create Event</button>
 <!--
                           <div><p id="content"></p></div> -->
 
@@ -195,7 +195,7 @@
     if (isSignedIn) {
       console.log('is signed in');
       authorizeButton.style.display = 'none';
-      signoutButton.style.display = 'block';
+      signoutButton.style.display = 'inline-block';
       createButton.addEventListener('click', function (event) {
         event.preventDefault();
         createEvent();
@@ -203,7 +203,7 @@
       // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
     } else {
       console.log('is signed out');
-      authorizeButton.style.display = 'block';
+      authorizeButton.style.display = 'inline-block';
       signoutButton.style.display = 'none';
       // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
       // createEvent();
