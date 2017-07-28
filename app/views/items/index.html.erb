@@ -156,6 +156,7 @@
   var SCOPES = "https://www.googleapis.com/auth/calendar";
 
   // Grab the inputs from user
+
   var authorizeButton = document.getElementById('authorize-button');
   var signoutButton = document.getElementById('signout-button');
   var createButton = document.getElementById('create');
@@ -199,11 +200,14 @@
       createButton.addEventListener('click', function () {
         createEvent();
       });
+      // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
     } else {
       console.log('is signed out');
 
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';
+      // createEvent(storeName.value, purchaseDate.value.split('-').reverse().join('-'), item.value);
+      // createEvent();
     }
   }
 
@@ -275,13 +279,14 @@
 
       var newEvent = {
         'summary': storeName,
+        // 'location': '800 Howard St., San Francisco, CA 94103',
         'description': 'Last day to return ' + item,
         'start': {
-          'dateTime': date + 'T11:00:00+10:00',
+          'dateTime': date + 'T09:00:00+10:00',
           'timeZone': 'Australia/Melbourne'
         },
         'end': {
-          'dateTime': date + 'T19:00:00+10:00',
+          'dateTime': date + 'T17:00:00+10:00',
           'timeZone': 'Australia/Melbourne'
         },
         'reminders': {
@@ -295,6 +300,8 @@
       console.log (newEvent);
       addEvent(newEvent);
     });
+    // debugger
+
   }
 
 </script>
