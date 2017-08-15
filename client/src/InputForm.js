@@ -3,7 +3,12 @@ import Paper from 'material-ui/Paper';
 import StoreAutoComplete from './StoreAutoComplete';
 import Moment from 'moment'
 import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker'
+import DatePicker from 'material-ui/DatePicker';
+import AddToCalendar from 'react-add-to-calendar'
+
+  // const CLIENT_ID = "1067946640271-cq4jq2rd8efhultg1v6sbgk01dot1jos.apps.googleusercontent.com";
+  // const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+  // const SCOPES = "https://www.googleapis.com/auth/calendar";
 
 class InputForm extends React.Component{
 
@@ -12,59 +17,27 @@ class InputForm extends React.Component{
     this.handleItemFieldChange = this.handleItemFieldChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleStoreFieldChange = this.handleStoreFieldChange.bind(this);
-    this.addEvent = this.addEvent.bind(this);
+    this.setEventWindow = this.setEventWindow.bind(this);
+    this.fetchReturnWindow = this.fetchReturnWindow.bind(this);
+    this.convertTime = this.convertTime.bind(this);
     this.state = {
       storeName: '',
       purchaseDate: '',
       item: '',
-      authorizeButton: true,
-      signOutButton: false,
-    }
+      returnWindow: 0,
+      startTime: '',
+      endTime: '',
+      event: {
+        title: 'Testing Event',
+        description: 'I AM AROBOT',
+        location: 'Portland, OR',
+        startTime: '2017-09-16T20:15:00-04:00',
+        endTime: '2017-09-16T21:45:00-04:00'
+      }
+    };
   }
-
-  // const CLIENT_ID = "<%= ENV["CLIENT_ID"] %>";
-  // const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-  // const SCOPES = "https://www.googleapis.com/auth/calendar";
 
   componentDidMount() {
-    this.loadApi();
-  }
-
-  // loadApi() {
-  //   const script = document.createElement('script');
-  //   script.src = 'https://apis.google.com/js/api.js';
-  //   document.body.appendChild(script);
-
-  //   script.onload = () => {
-  //     window.gapi.load('client:auth2', this.checkAuth.bind(this));
-  //   }
-  // }
-
-  // loads auth2 and API client library
-  // handleClientLoad() {
-  //   gapi.load('client:auth2', initClient)
-  // }
-
-  // initClient() {
-  //   gapi.client.init({
-  //     discoveryDocs: DISCOVERY_DOCS,
-  //     clientId: CLIENT_ID,
-  //     scope: SCOPES
-  //   }).then(function() {
-  //     // listen for sign-in state changes
-  //     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
-
-  //     // handle initial sign-in state
-  //     updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-  //     authorizeButton.onclick = handleAuthClick;
-  //     signOutButton.onclick = handleSignOutClick;
-  //   });
-  // }
-
-  updateSignInStatus(isSignedIn) {
-    if (isSignedIn) {
-      console.log('is signed in');
-    }
   }
 
   handleItemFieldChange(event) {
@@ -76,22 +49,51 @@ class InputForm extends React.Component{
     this.setState({ purchaseDate: date });
   }
 
-  handleStoreFieldChange(value) {
-    this.setState({ storeName: value })
+  fetchReturnWindow() {
+    let selectedStore = this.state.storeName;
+    let url = `api/stores#index`;
+
+    fetch(url, {
+      accept: 'application/json',
+    }).then((response) => response.json())
+      .then((storeList) => (storeList.forEach((store) => {
+          if (store.name === selectedStore) {
+          this.setState({ returnWindow: store.return_window});
+          }
+        })))
+      .then(this.convertTime)
+      .then(this.setEventWindow);
+  };
+
+  convertTime() {
+    let purchaseDate = Moment(this.state.purchaseDate);
+
+    let returnWindow = this.state.returnWindow;
+    
+    let returnDateEnd = purchaseDate.clone().add(returnWindow, 'day');
+
+    let returnDateStart = purchaseDate.clone().add((returnWindow-1), 'day');
+
+    this.setState({
+      startTime: returnDateStart.format(),
+      endTime: returnDateEnd.format()
+    });
+  }
+    
+  setEventWindow(event) {
+    this.setState({
+      event: {
+        title: 'Last day to return ' + this.state.item,
+        description: this.state.storeName,
+        location: this.state.storeName + ', Melbourne, AUS',
+        startTime: this.state.startTime,
+        endTime: this.state.endTime
+      }
+    })
   }
 
-  // addEvent(newEvent) {
-  //   const request = gapi.client.calendar.events.insert({
-  //     'calendarId': 'primary',
-  //     'resource': newEvent
-  //   });
-  // }
-
-  createEvent() {
-    const storeName = this.state.storeName;
-    const purchaseDate = this.state.purchaseDate;
-    const item = this.state.item;
-
+  handleStoreFieldChange(value) {
+    this.setState({ storeName: value })
   }
 
   render() {
@@ -102,6 +104,7 @@ class InputForm extends React.Component{
       textAlign: 'center',
       display: 'inline-block',
     };
+
     return <div>
       <Paper 
       style={style} 
@@ -123,12 +126,16 @@ class InputForm extends React.Component{
           />
           <br/>
           <button 
-            onClick={this.addEvent}
+            onClick={this.fetchReturnWindow}
             style={{
               padding: 10,
               position: 'relative',
               right: 60
             }}>Add to Calendar</button>
+            <AddToCalendar 
+              event={this.state.event}
+              buttonLabel="Let's do this shit"
+            />;
         </div>
         }
        />
