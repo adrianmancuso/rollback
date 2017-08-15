@@ -31,6 +31,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rails3-jquery-autocomplete'
 gem 'nifty-generators'
+gem 'foreman', '~> 0.82.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
