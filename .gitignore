@@ -1,3 +1,4 @@
 tmp/*
 log/*
 client/node-modules/*
+node_modules/*

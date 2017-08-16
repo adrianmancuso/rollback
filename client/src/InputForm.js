@@ -4,11 +4,7 @@ import StoreAutoComplete from './StoreAutoComplete';
 import Moment from 'moment'
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
-import AddToCalendar from 'react-add-to-calendar'
-
-  // const CLIENT_ID = "1067946640271-cq4jq2rd8efhultg1v6sbgk01dot1jos.apps.googleusercontent.com";
-  // const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-  // const SCOPES = "https://www.googleapis.com/auth/calendar";
+import AddToCalendar from 'react-add-to-calendar';
 
 class InputForm extends React.Component{
 
@@ -28,11 +24,11 @@ class InputForm extends React.Component{
       startTime: '',
       endTime: '',
       event: {
-        title: 'Testing Event',
-        description: 'I AM AROBOT',
-        location: 'Portland, OR',
-        startTime: '2017-09-16T20:15:00-04:00',
-        endTime: '2017-09-16T21:45:00-04:00'
+        title: '',
+        description: '',
+        location: '',
+        startTime: '',
+        endTime: ''
       }
     };
   }
@@ -98,11 +94,17 @@ class InputForm extends React.Component{
 
   render() {
     const style = {
-      height: '40vh',
-      width: '80vw',
+      padding: 20,
       margin: 20,
+      backgroundColor: '#FBFFFF',
       textAlign: 'center',
       display: 'inline-block',
+    };
+
+    const h5Style = {
+      color: '#287D99',
+      fontFamily: 'Raleway',
+      textAlign: 'justify'
     };
 
     return <div>
@@ -111,6 +113,17 @@ class InputForm extends React.Component{
       zDepth={2}
       children={
         <div>
+          <h5 style={ h5Style }>Enter the item of clothing purchased, the store and the date.
+          </h5> 
+          
+          <h5 style={ h5Style }>
+          We will remind you when the return window is almost up.
+          </h5> 
+          
+          <h5 style={ h5Style }>
+          Easy.
+          </h5>
+
           <TextField
             onChange={this.handleItemFieldChange} 
             hintText="Item Bought"
@@ -119,7 +132,8 @@ class InputForm extends React.Component{
           <DatePicker
             onChange={this.handleDateChange}
             hintText="Date Purchased" 
-            mode="landscape"
+            mode="portrait"
+
           />
           <StoreAutoComplete
             onChange={this.handleStoreFieldChange}
@@ -130,12 +144,14 @@ class InputForm extends React.Component{
             style={{
               padding: 10,
               position: 'relative',
-              right: 60
-            }}>Add to Calendar</button>
+              right: 70
+            }}>
             <AddToCalendar 
+              style={{height: 200}}
               event={this.state.event}
-              buttonLabel="Let's do this shit"
-            />;
+              buttonLabel="Add To Calendar"
+            />            
+          </button> 
         </div>
         }
        />

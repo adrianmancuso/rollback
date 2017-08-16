@@ -1,5 +1,8 @@
 {
   "name": "rollback_app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "localtunnel": "^1.8.3"
+  }
 }
