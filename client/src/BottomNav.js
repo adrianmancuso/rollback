@@ -21,9 +21,9 @@ class BottomNav extends Component {
   render() {
     return (
       <Paper 
-      zDepth={1}
+      zDepth={2}
       style={{
-        position: 'absolute',
+        position: 'fixed',
         bottom: 0
       }}
       >
@@ -39,7 +39,7 @@ class BottomNav extends Component {
             onTouchTap={() => this.select(1)}
           />
           <BottomNavigationItem
-            label="Nearby"
+            label="Locations"
             icon={nearbyIcon}
             onTouchTap={() => this.select(2)}
           />

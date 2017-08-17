@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   scope '/api' do
     get :stores, to: 'api/stores#index'
     get 'stores/:id', to: 'api/stores#show'
+
+    get :users, to: 'api/users#index'
+    get 'users/:id', to: 'api/users#show'
   end 
 
 end

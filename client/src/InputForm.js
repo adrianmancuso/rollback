@@ -16,7 +16,9 @@ class InputForm extends React.Component{
     this.setEventWindow = this.setEventWindow.bind(this);
     this.fetchReturnWindow = this.fetchReturnWindow.bind(this);
     this.convertTime = this.convertTime.bind(this);
+    this.toggleHover = this.toggleHover.bind(this);
     this.state = {
+      hover: false,
       storeName: '',
       purchaseDate: '',
       item: '',
@@ -37,7 +39,6 @@ class InputForm extends React.Component{
   }
 
   handleItemFieldChange(event) {
-    console.log(this.state);
     this.setState({ item: event.target.value })
   }
 
@@ -85,27 +86,56 @@ class InputForm extends React.Component{
         startTime: this.state.startTime,
         endTime: this.state.endTime
       }
-    })
+    });
+    console.log(this.state.event);
   }
 
   handleStoreFieldChange(value) {
     this.setState({ storeName: value })
   }
 
+  // getInitialState(){
+  //   return {hover: false}
+  // };
+
+  toggleHover(event) {
+    this.setState({hover: !this.state.hover})
+  }
+
   render() {
     const style = {
-      padding: 20,
+      padding: "0 20px 25px 20px",
       margin: 20,
       backgroundColor: '#FBFFFF',
       textAlign: 'center',
       display: 'inline-block',
     };
 
-    const h5Style = {
-      color: '#287D99',
-      fontFamily: 'Raleway',
-      textAlign: 'justify'
-    };
+    var hoverStyle;
+    if (this.state.hover) {
+      hoverStyle = {
+        margin: '10px 0 0 0',
+        padding: 10,
+        fontSize: '2rem',
+        fontFamily: 'Raleway',
+        position: 'relative',
+        borderBottom: "0.05rem solid #FF7369",
+        backgroundColor: '#EEFDFF',
+        boxShadow: '5px 3px 3px mistyrose',
+        display: "inline-block"
+      }
+    } else {
+      hoverStyle = {
+        margin: '10px 0 0 0',
+        padding: 10,
+        fontSize: '2rem',
+        fontFamily: 'Raleway',
+        position: 'relative',
+        borderBottom: "0.05rem solid #72b6cc",
+        backgroundColor: 'white',
+        display: "inline-block"
+      }
+    }
 
     return <div>
       <Paper 
@@ -113,17 +143,7 @@ class InputForm extends React.Component{
       zDepth={2}
       children={
         <div>
-          <h5 style={ h5Style }>Enter the item of clothing purchased, the store and the date.
-          </h5> 
-          
-          <h5 style={ h5Style }>
-          We will remind you when the return window is almost up.
-          </h5> 
-          
-          <h5 style={ h5Style }>
-          Easy.
-          </h5>
-
+         
           <TextField
             onChange={this.handleItemFieldChange} 
             hintText="Item Bought"
@@ -139,19 +159,15 @@ class InputForm extends React.Component{
             onChange={this.handleStoreFieldChange}
           />
           <br/>
-          <button 
+          <div 
             onClick={this.fetchReturnWindow}
-            style={{
-              padding: 10,
-              position: 'relative',
-              right: 70
-            }}>
-            <AddToCalendar 
-              style={{height: 200}}
-              event={this.state.event}
-              buttonLabel="Add To Calendar"
-            />            
-          </button> 
+            onMouseEnter={this.toggleHover}
+            onMouseLeave={this.toggleHover}
+            style={hoverStyle}>
+              <AddToCalendar 
+                event={this.state.event}
+              />            
+          </div> 
         </div>
         }
        />

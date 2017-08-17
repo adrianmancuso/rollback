@@ -20,6 +20,12 @@ const muiTheme = getMuiTheme({
 
 class App extends Component {
   render() {
+    const h5Style = {
+      color: '#287D99',
+      fontFamily: 'Raleway',
+      textAlign: 'justify'
+    };
+
     return (
 
       <div className="App">
@@ -30,7 +36,26 @@ class App extends Component {
        <MuiThemeProvider>
         <TopMenu />
        </MuiThemeProvider>
-        
+         <div
+          style={{
+            margin: "0 auto",
+            padding: 10,
+            width: "80%"
+
+          }}
+         >
+            <h5 style={ h5Style }>
+            Enter the item of clothing purchased, the store and the date.
+           </h5> 
+          
+            <h5 style={ h5Style }>
+              We will remind you when the return window is almost up.
+            </h5> 
+          
+            <h5 style={ h5Style }>
+              Easy.
+            </h5>
+          </div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <InputForm />
         </MuiThemeProvider>

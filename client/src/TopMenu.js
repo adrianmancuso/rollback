@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import AppBar from 'material-ui/AppBar';
-import Menu from 'material-ui/Menu';
-import {cyan300} from 'material-ui/styles/colors';
+import React from 'react';
+import {cyan500} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import IconButton from 'material-ui/IconButton';
@@ -36,14 +34,14 @@ const Heading = (props) => (
       display: 'inline-block',
       margin: '0 auto'
         }}
-    >Rollback
+    >Raincheck
     </h1>
   </div>
 )
 
 const muiTheme = getMuiTheme({
   palette: {
-    textColor: cyan300,
+    textColor: cyan500,
   },
   appBar: {
     height: '4em',
@@ -53,11 +51,6 @@ const muiTheme = getMuiTheme({
 Logged.muiName = 'IconMenu'
 
 export default class TopMenu extends React.Component {
-
-  constructor(props) {
-    super(props);    
-  }
-
 
   render() {
     return(
