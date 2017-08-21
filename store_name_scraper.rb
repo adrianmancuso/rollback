@@ -3,9 +3,9 @@ require "nokogiri"
 require "mechanize"
 require 'json'
 require 'pry'
-require_relative 'web_scraper'
+# require_relative 'web_scraper'
 
-start = "/Shopping/Fashion/Womens/Pages/Womens.aspx"
+start = "/Shopping/Fashion/Mens/Pages/Mens.aspx"
 @store_names = []
 
 def store_scraper url
@@ -49,5 +49,5 @@ store_scraper start
 
 
 
-# binding.pry
-# puts 'so that i can debug even with pry-byebug'
+binding.pry
+puts 'so that i can debug even with pry-byebug'
