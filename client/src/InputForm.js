@@ -5,6 +5,7 @@ import Moment from 'moment'
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import AddToCalendar from 'react-add-to-calendar';
+import Snackbar from 'material-ui/Snackbar';
 
 class InputForm extends React.Component{
 
@@ -18,6 +19,7 @@ class InputForm extends React.Component{
     this.convertTime = this.convertTime.bind(this);
     this.toggleHover = this.toggleHover.bind(this);
     this.state = {
+      open: false,
       hover: false,
       storeName: '',
       purchaseDate: '',
@@ -59,7 +61,8 @@ class InputForm extends React.Component{
           }
         })))
       .then(this.convertTime)
-      .then(this.setEventWindow);
+      .then(this.setEventWindow)
+      .then(this.state = { open: true });
   };
 
   convertTime() {
@@ -93,10 +96,6 @@ class InputForm extends React.Component{
   handleStoreFieldChange(value) {
     this.setState({ storeName: value })
   }
-
-  // getInitialState(){
-  //   return {hover: false}
-  // };
 
   toggleHover(event) {
     this.setState({hover: !this.state.hover})
@@ -170,6 +169,11 @@ class InputForm extends React.Component{
           </div> 
         </div>
         }
+       />
+       <Snackbar
+        open={this.state.open}
+        message="Event added to your calendar"
+        autoHideDuration={2000}
        />
     </div>
 

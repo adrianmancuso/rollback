@@ -7,6 +7,7 @@ import HistoryIcon from 'material-ui/svg-icons/action/history';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar'
 
 const nearbyIcon = <IconLocationOn />;
 const faceIcon = <FaceIcon />;
@@ -23,7 +24,8 @@ class BottomNav extends Component {
 
   state = {
     selectedIndex: 0,
-    open: false
+    open: false,
+    Snackbar: false
   };
 
     handleOpen = () => {
@@ -76,7 +78,10 @@ class BottomNav extends Component {
             actions={actions}
             modal={false}
             open={this.state.open}
-            onRequestClose={this.handleClose}
+            onRequestClose={
+              this.handleClose,
+              this.state = { Snackbar: true }
+            }
           >
           Let us to keep track of your returns and receipts for you.
           <TextField
@@ -88,8 +93,14 @@ class BottomNav extends Component {
             onChange={this.handleItemFieldChange} 
             hintText="Don't Use 'Password'"
             floatingLabelText="Password"
+            type="password"
           /><br />
         </Dialog>
+        <Snackbar
+          open={this.state.Snackbar}
+          message="User added"
+          autoHideDuration={2000}
+        />
         </BottomNavigation>
       </Paper>
     );
