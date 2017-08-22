@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
+import Create from 'material-ui/svg-icons/content/create';
 import FaceIcon from 'material-ui/svg-icons/action/face';
 import HistoryIcon from 'material-ui/svg-icons/action/history';
 import Dialog from 'material-ui/Dialog';
@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar'
 
-const nearbyIcon = <IconLocationOn />;
+const create = <Create />;
 const faceIcon = <FaceIcon />;
 const historyIcon = <HistoryIcon />;
 
@@ -33,7 +33,10 @@ class BottomNav extends Component {
   };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({
+      open: false,
+      Snackbar: true
+    });
   };
 
   select = (index) => this.setState({selectedIndex: index});
@@ -70,7 +73,7 @@ class BottomNav extends Component {
           />
           <BottomNavigationItem
             label="Sign Up"
-            icon={nearbyIcon}
+            icon={create}
             onTouchTap={this.handleOpen}
           />
           <Dialog
@@ -78,10 +81,7 @@ class BottomNav extends Component {
             actions={actions}
             modal={false}
             open={this.state.open}
-            onRequestClose={
-              this.handleClose,
-              this.state = { Snackbar: true }
-            }
+            onRequestClose={this.handleClose}
           >
           Let us to keep track of your returns and receipts for you.
           <TextField

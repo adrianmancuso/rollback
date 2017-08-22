@@ -62,7 +62,7 @@ class InputForm extends React.Component{
         })))
       .then(this.convertTime)
       .then(this.setEventWindow)
-      .then(this.state = { open: true });
+      .then(this.setState({ open: true }));
   };
 
   convertTime() {
@@ -80,7 +80,7 @@ class InputForm extends React.Component{
     });
   }
     
-  setEventWindow(event) {
+  setEventWindow() {
     this.setState({
       event: {
         title: 'Last day to return ' + this.state.item,
