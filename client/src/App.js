@@ -40,8 +40,8 @@ class App extends Component {
           style={{
             margin: "0 auto",
             padding: 10,
-            width: "80%"
-
+            width: "80%",
+            display: 'block'
           }}
          >
             <h5 style={ h5Style }>
@@ -57,7 +57,7 @@ class App extends Component {
             </h5>
           </div>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <InputForm />
+          <InputForm style={{ display: 'none'}}/>
         </MuiThemeProvider>
 
         <MuiThemeProvider>

@@ -136,7 +136,7 @@ class InputForm extends React.Component{
       }
     }
 
-    return <div>
+    return <div style={{display: 'block'}}>
       <Paper 
       style={style} 
       zDepth={2}
